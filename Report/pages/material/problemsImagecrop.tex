@@ -1,0 +1,22 @@
+% !TEX root=../../report.tex
+
+
+\Subsubsection[problemswithProfileimg]{Profilbildanzeige}
+Bevor ein Profilbild des Nutzers angezeigt werden kann, muss dieser ein Bild zum EventManager hochladen.
+
+Die hierfür verwendete Komponente heißt \enquote{ngx-img-cropper} und wird mit \gls{npm} installiert. Diese Komponente ist weder Bestandteil des Angular, noch des Angular Material Frameworks. Mithilfe des \enquote{Image croppers} können die Nutzer ein Bild auf ihrem Computer auswählen und dieses zuschneiden (\myautoref{fig:imgcrop.PNG}). Danach wird das Bild als \gls{blob} hochgeladen.
+
+\image[scale=.25]{imgcrop.PNG}{Ansicht beim Vorgang des Bildzuschneidens (Image crop)}
+
+\Subsubsection{Problematik beim Anzeigen von Profilbildern}
+Bilder werden beim EventManager auf dem Server als \gls{blob} abgespeichert.
+Übergibt man dieses \gls{blob} nun an ein \gls{html} Image-Tag, wird der Wert als \gls{url} interpretiert. Dies hat zur Folge, dass der Browser einen GET-Request an diese \gls{url} absetzt. Der Webserver antwortet in diesem Fall mit einem 414 \enquote{Request-URI Too Long} \gls{http} Status Code. Folglich kann das Profilbild des Nutzers nicht angezeigt werden.
+
+Um dieses Problem zu lösen, wird das Profilbild fortan nicht mehr als \gls{blob} mitgegeben. Stattdessen wird die \gls{url} des Profilbildes an den Image-Tag übergeben, sodass dieser einen korrekten GET-Request generiert.
+
+Dieser Ansatz liefert jedoch einen 401 \enquote{Unauthorized} \gls{http} Status Code. Der Status Code kommt zustande, da der Image-Tag keinen Autorisierungsheader mitsendet, weil dieser vom Interceptor angefügt werden muss, welcher in diesem Szenario nicht angesprochen wird (beschrieben in \myref{authInterceptor}). Die einzige Lösung, diesen Ansatz funktionsfähig zu machen, wäre alle Profilbilder auszuliefern, ohne auf eine Autorisierung zu prüfen. Dies ist aus verschiedensten datenschutzrechtlichen sowie sicherheitstechnischen Aspekten nicht möglich.
+
+\file{imagePrefix.ts}{Einfügen des Präfixes in das BLOB}{JavaScript}
+
+Letztendlich wird das Profilbild wieder als \gls{blob} an den Image-Tag übergeben. Der Unterschied ist jedoch, dass dies funktioniert, wenn dem Image-Tag mittels des \enquote{data:image/png;base64,} Präfixes signalisiert wird, dass es sich bei den folgenden Daten um ein \gls{blob} und nicht um eine \gls{url} handelt (\myautoref{lst:imagePrefix.ts}).
+Das Profilbild kann nun wie gewünscht dargestellt werden.

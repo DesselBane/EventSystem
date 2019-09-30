@@ -1,0 +1,90 @@
+% Document information
+\newcommand{\titel}{ Bericht über die Projektarbeit EventManager} %TODO
+\newcommand{\untertitel}{ } % TODO
+\newcommand{\art}{} %TODO
+\newcommand{\fachgebiet}{} % TODO
+\newcommand{\studienbereich}{Informatik} %TODO
+\newcommand{\erstgutachter}{Prof. Dr. }
+\newcommand{\zweitgutachter}{} %TODO
+\newcommand{\betreuer}{}
+\newcommand{\unternehmen}{}
+\newcommand{\jahr}{2018}
+\newcommand{\ort}{Nürnberg}
+\newcommand{\logo}{res/images/logo_th.png}
+\newcommand{\matrikelnr}{} %TODO
+\newcommand{\autor}{} %TODO
+
+
+% color definitions
+\definecolor{dkgreen}{rgb}{0.34,0.65,0.29}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{lightblue}{rgb}{0.34,0.61,0.84}
+\definecolor{cyan}{rgb}{0.0,0.6,0.6}
+\definecolor{darkred}{rgb}{0.6,0.0,0.0}
+\definecolor{lightyellow}{rgb}{1,1,0.9}
+\definecolor{vs_string}{rgb}{0.84,0.61,0.52}
+\definecolor{vs_keyword}{rgb}{0.34,0.61,0.84}
+\definecolor{vs_comment}{rgb}{0.34,0.65,0.29}
+\definecolor{vs_class}{rgb}{0.30,0.79,0.69}
+\definecolor{vs_interface}{rgb}{0.30,0.79,0.69}
+\definecolor{ec_string}{rgb}{0.16,0.0,1.0}
+\definecolor{ec_keyword}{rgb}{0.5,0.0,0.33}
+\definecolor{ec_comment}{rgb}{0.25,0.5,0.37}
+\definecolor{ec_class}{rgb}{0,0,0}
+\definecolor{ec_interface}{rgb}{0,0,0}
+\definecolor{xml_tag}{rgb}{0.5,0.0,0.33}
+\definecolor{xml_comment}{rgb}{0.25,0.5,0.37}
+\definecolor{xml_attribute}{rgb}{0.25,0.25,0.25}
+\definecolor{xml_at_value}{rgb}{0.34,0.61,0.84}
+\definecolor{xml_value}{rgb}{0,0,0}
+\definecolor{light_gray}{gray}{0.95}
+\definecolor{lightgray}{rgb}{0.95, 0.95, 0.95}
+\definecolor{darkgray}{rgb}{0.4, 0.4, 0.4}
+\definecolor{editorGray}{rgb}{0.95, 0.95, 0.95}
+\definecolor{editorOcher}{rgb}{1, 0.5, 0} % #FF7F00 -> rgb(239, 169, 0)
+\definecolor{editorGreen}{rgb}{0, 0.5, 0} % #007C00 -> rgb(0, 124, 0)
+\definecolor{orange}{rgb}{1,0.45,0.13}
+\definecolor{olive}{rgb}{0.17,0.59,0.20}
+\definecolor{brown}{rgb}{0.69,0.31,0.31}
+\definecolor{purple}{rgb}{0.38,0.18,0.81}
+\definecolor{lightblue}{rgb}{0.1,0.57,0.7}
+\definecolor{lightred}{rgb}{1,0.4,0.5}
+
+% ------------------------------------------------------------------------------
+% Header and Footer
+% ------------------------------------------------------------------------------
+\pagestyle{scrheadings}
+\clearscrheadings
+\ihead{\headmark}
+\setlength{\headheight}{21mm}
+\setheadwidth[0pt]{textwithmarginpar}
+\setheadsepline[text]{0.4pt} % Trennlinie unter Kopfzeile
+\setfootsepline[text]{0.4pt} % Trennlinie überhalb der Fußzeile
+\ifoot{\today}
+%\ofoot{\pagemark}
+
+
+% Seitenränder
+\setlength{\topskip}{\ht\strutbox} % behebt Warnung von geometry
+\geometry{paper=a4paper,left=35mm,right=35mm,top=30mm}
+
+% Schusterjungen und Hurenkinder vermeiden
+\clubpenalty = 10000
+\widowpenalty = 10000
+\displaywidowpenalty = 10000
+
+% Zeilenabstand
+%\onehalfspacing
+
+%listings
+% codestyle for listings
+% Redifine existing package commands
+\renewcommand{\lstlistlistingname}{Quellcodeverzeichnis}
+\renewcommand{\lstlistingname}{Quellcode}
+\input {setting/codestyle}
+
+% Spaltendefinition rechtsbündig mit definierter Breite
+\newcolumntype{w}[1]{>{\raggedleft\hspace{0pt}}p{#1}}
+
+%Enable to have a new page before a new Section
+%\newcommand{\sectionbreak}{\clearpage}

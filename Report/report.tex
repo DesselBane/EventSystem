@@ -1,0 +1,110 @@
+\documentclass[
+    12pt, % Schriftgröße
+    ngerman, % für Umlaute, Silbentrennung etc.
+    a4paper, % Papierformat
+    oneside, % einseitiges Dokument
+    titlepage, % es wird eine Titelseite verwendet
+    parskip=half, % Abstand zwischen Absätzen (halbe Zeile)
+    headings=normal, % Größe der Überschriften verkleinern
+    listof=totoc, % Verzeichnisse im Inhaltsverzeichnis aufführen
+    bibliography=totoc, % Literaturverzeichnis im Inhaltsverzeichnis aufführen
+    index=totoc, % Index im Inhaltsverzeichnis aufführen
+    captions=tableheading, % Beschriftung von Tabellen unterhalb ausgeben
+    final % Status des Dokuments (final/draft)
+] {scrreprt}
+
+
+% ------------------------------------------------------------------------------
+% preamble
+% ------------------------------------------------------------------------------
+
+% include packages
+\input{setting/packages}
+
+% Configure Packages
+\input{setting/configuration}
+
+% define global commands
+\input{setting/commands}
+
+% define glossary entries
+\input{setting/glossary}
+
+
+% create index
+\indexsetup{othercode=\small}
+\makeindex[title=Indexverzeichnis,program=makeindex,columns=2,intoc=true,options={-s setting/glossary_style.ist}]
+
+% create glossar
+\makeglossaries
+\setglossarystyle{listgroup}
+
+\bibliography{res/bib/citavi}
+
+% ------------------------------------------------------------------------------
+% document start
+% ------------------------------------------------------------------------------
+\begin{document}
+% Deckblatt und Abstract ohne Seitenzahl
+\addpage{report_coversheet}
+%\addpage{abstract}
+
+% start page numberging
+\ofoot{\pagemark}
+\pagenumbering{Roman}
+
+% Inhaltsverzeichnis
+\tableofcontents
+
+% Abbildungsverzeichnis
+\listoffigures
+
+% Tabellenverzeichnis
+%\listoftables
+
+% Quellcodeverzeichnis
+\lstlistoflistings
+
+% arabic page count
+\clearpage
+\pagenumbering{arabic}
+
+% ##############################################################################
+% Chapters
+
+\addpage{introduction}
+\addpage{concept}
+\addpage{orga}
+\addpage{angular}
+\addpage{material}
+\addpage{asp}
+\addpage{ef}
+\addpage{di}
+\addpage{conclusion}
+
+
+% ##############################################################################
+
+% glossary
+\addcontentsline{toc}{chapter}{Abkürzungsverzeichnis} % add to table of contents
+\setlist[description]{leftmargin=!, labelwidth=5em} % Change for glossaries
+\printglossary[title=Abkürzungsverzeichnis]
+\setlist[description]{style=standard} % reset settings back to default
+
+
+% Indexverzeichnis
+%\printindex
+
+% print bibliography
+%\sloppy
+\printbibliography
+
+% Anhang
+%\begin{appendix}
+%	\clearpage
+%	\pagenumbering{roman}
+%\addpage{declaration}                     % add declaration page
+%\setdefaultleftmargin{1em}{}{}{}{}{}%    % Rand der Aufzählungen in Tabellen anpassen
+%\end{appendix}
+
+\end{document}

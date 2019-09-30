@@ -1,0 +1,18 @@
+% !TEX root=../../report.tex
+
+\Section[interception_general]{Interception}
+
+Interception befasst sich mit den sogenannten \enquote{crosscutting concerns}, wie \zB Validierung, Logging, Exception Handling, Caching oder Ähnlichem. Wichtig bei diesen Punkten ist, dass sie nicht von den gleichen Klassen behandelt werden sollten, die auch die Business Logik beinhalten. Denn dies würde das \enquote{Single Responsibility} sowie das \enquote{open/closed} Prinzip verletzen. Oftmals ist das Problem, dass die Objekthierarchie um die Domain-Klassen herum aufgebaut ist. Das bedeutet an vielen verschiedenen Orten in der Codebasis werden ähnliche Funktionen benötigt. Die Herausforderung ist nun, diese Funktionalitäten so umzusetzen, dass der Code konsistent und wartbar ist, und möglichst nicht dupliziert wird. Auch hierfür gibt es mehrere Möglichkeiten wie \zB das \enquote{Decorator Pattern} oder auch den aspektorientierten Programmieransatz.
+
+Bei einer Interception wird Code zwischen einem Methodenaufruf und dem eigentlichen Ziel eingefügt (\myautoref{fig:interception.png}). Es ist möglich, Code vor und nach dem Methodenaufruf zu injizieren. Hiermit können die Parameter oder der Rückgabewert validiert sowie Exceptions abgefangen werden. Der injizierte Code wird als \enquote{Behavior} bezeichnet. Oftmals ist es im Interesse der Entwickler, mehrere Behaviors hintereinander zu injizieren, um \zB zuerst den Aufruf zu loggen, dann die Parameter zu validieren und zum Abschluss auf Exceptions zu prüfen. Offensichtlich sollte jeder dieser Aspekte von einer anderen Klasse realisiert werden. Mit Interception ist es möglich, mehrere Behaviors in einer \enquote{Behavior Pipeline} zu organisieren, sodass eine bestimmte Reihenfolge eingehalten wird und die einzelnen Behaviors auch voneinander entkoppelt sind.
+
+\autoImg{interception.png}{Beispiel einer Instance Interception \cite{inter}}
+
+Diese Pipeline ähnelt stark dem Decorator Pattern. Der entscheidende Unterschied jedoch ist, dass der Aufbau der Pipeline im Falle der Interception dynamisch zur Laufzeit erfolgt. Das hat den großen Vorteil, dass bei einer Änderung in der Reihenfolge der Behaviors \bzw Decorators nur die Konfiguration, und nicht zusätzlich die Behavior/Decorator Klassen geändert werden müssen.
+
+\Subsubsection{Arten der Interception}
+Es gibt viele Möglichkeiten, Interception zu implementieren. Die gängisten sind die der \enquote{Instance Interception} und der \enquote{Type Interception}. Man könnte allerdings argumentieren, dass auch die \gls{owin} Pipeline eine Art von Interception darstellt ohne, dass der Begriff Interception in diesem Zusammenhang auftaucht.
+
+Bei der Instance Interception (\myautoref{fig:interception.png}) wird zur Laufzeit ein Proxy-Objekt erstellt, welches Referenzen auf die einzelnen Behaviors sowie auf das Zielobjekt hält. Dieses Objekt ist dafür zuständig, die Interception Behaviors in der richtigen Reihenfolge aufzurufen. Dies ist die meist genutzte Methode der Interception und funktioniert am besten in Kombination mit Interfaces. Es ist hier nicht mehr möglich, das Proxy-Objekt in den Zieltyp zu \enquote{casten}. Die Type Interception (\myautoref{fig:typeInterception.png}) orientiert sich eher am Decorator Pattern. Hier wird zur Laufzeit ein dynamischer Typ erstellt, der vom Zieltyp erbt. Bei dieser Art von Interception können nur virtuelle Methoden abgefangen werden. Dafür ist es möglich das Proxy-Objekt in den Zieltyp zu casten, da dieser die Basisklasse darstellt.
+
+\autoImg{typeInterception.png}{Beispiel einer Type Interception \cite{inter}}

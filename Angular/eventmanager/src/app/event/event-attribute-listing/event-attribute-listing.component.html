@@ -1,0 +1,52 @@
+<form #f="ngForm" (ngSubmit)="f.valid && onSubmit()">
+  <div fxLayout="column">
+    <md-input-container fxFlexFill>
+      <input mdInput placeholder="Titel" [(ngModel)]="event.name" name="eventName" [disabled]="mode === showMode"
+             required>
+      <md-error>Geben Sie einen Titel für Ihre Veranstaltung an!</md-error>
+    </md-input-container>
+    <md-input-container fxFlexFill>
+      <input mdInput placeholder="Beschreibung" [(ngModel)]="event.description" name="eventDescription"
+             [disabled]="mode === showMode">
+    </md-input-container>
+    <md-input-container fxFlexFill>
+      <input mdInput [mdDatepicker]="startTimeDatepicker" placeholder="Startdatum" [(ngModel)]="event.start"
+             name="eventStartTime" [disabled]="mode === showMode" required>
+      <md-datepicker-toggle mdSuffix [for]="startTimeDatepicker" type="button"
+                            [disabled]="mode === showMode"></md-datepicker-toggle>
+      <md-error>Geben Sie ein Startdatum an!</md-error>
+    </md-input-container>
+    <md-datepicker #startTimeDatepicker></md-datepicker>
+    <md-input-container fxFlexFill>
+      <input mdInput [mdDatepicker]="endTimeDatepicker" placeholder="Enddatum" [(ngModel)]="event.end"
+             name="eventEndTime" [disabled]="mode === showMode" required>
+      <md-datepicker-toggle mdSuffix [for]="endTimeDatepicker" type="button"
+                            [disabled]="mode === showMode"></md-datepicker-toggle>
+      <md-error>Geben Sie ein Enddatum an!</md-error>
+    </md-input-container>
+    <md-datepicker #endTimeDatepicker></md-datepicker>
+    <md-input-container fxFlexFill>
+      <input mdInput placeholder="Budget" [(ngModel)]="event.budget" name="eventBudget" value="number"
+             [disabled]="mode === showMode">
+      <label mdSuffix>€</label>
+    </md-input-container>
+    <md-card-actions fxLayout="row-reverse" fxLayoutAlign="space-between" fxFill>
+      <div fxLayout="row-reverse" fxFlex="40" *ngIf="mode !== showMode">
+        <button md-raised-button color="primary" type="button" (click)="goBack()" fxFlex="50">
+          Abbrechen
+        </button>
+        <button md-raised-button color="primary" fxFlex="50">
+          Speichern
+        </button>
+      </div>
+      <button md-raised-button color="primary" type="button" (click)="onDelete()" *ngIf="mode === editMode"
+              fxFlex="20">
+        Löschen
+      </button>
+      <button md-raised-button color="primary" type="button" (click)="onChangeToEdit()" *ngIf="mode === showMode"
+              fxFlex="20">
+        Editieren
+      </button>
+    </md-card-actions>
+  </div>
+</form>

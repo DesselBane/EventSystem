@@ -1,0 +1,28 @@
+<div class="card">
+  <h1 md-dialog-title fxLayout="row" fxLayoutAlign="space-between center">
+    <span>Bild ziehen, um es anzupassen.</span>
+    <!--<button md-button (click)="">
+      <md-icon>file_upload</md-icon>
+      Anderes Bild auswählen
+    </button>-->
+  </h1>
+  <div md-dialog-content>
+    <img-cropper #cropper
+                 [image]="data1"
+                 [settings]="cropperSettings1"
+                 (onCrop)="cropped($event)">
+    </img-cropper>
+    <div class="file-upload">
+      <!--<button md-raised-button color="primary"(change)="fileChangeListener($event)">Login</button>-->
+      <input id="custom-input" type="file" (change)="fileChangeListener($event)" style="display:none;position:absolute;">
+    </div>
+
+  </div>
+  <div md-dialog-actions fxLayout="row" fxLayoutAlign="end">
+    <button md-raised-button color="primary" (click)="saveProfilePicture()">Speichern</button>
+    <button md-raised-button color="primary" md-dialog-close="cancel">Abbrechen</button>
+  </div>
+</div>
+
+
+

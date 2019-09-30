@@ -1,0 +1,21 @@
+  <div fxLayout="column">
+    <md-card fxLayout="column"
+             fxLayout.gt-sm="row" fxLayoutGap="20px">
+      <img [width]="200"
+           [height]="200"
+           [src]="user?.realPerson?.profileImage"
+           class="profileImage" />
+      <div fxLayout="row" fxLayoutAlign="space-around start" fxLayoutGap="10px">
+        <div fxLayout="column">
+          <p>Username:</p>
+          <p>Vorname:</p>
+          <p>Nachname:</p>
+        </div>
+        <div fxLayout="column">
+          <p>{{user?.eMail}}</p>
+          <p>{{user?.realPerson?.firstname}}</p>
+          <p>{{user?.realPerson?.lastname}}</p>
+        </div>
+      </div>
+    </md-card>
+  </div>

@@ -1,0 +1,9 @@
+% !TEX root=../../report.tex
+
+\Section[aspDi]{Dependency Injection mit AutoFac}
+
+Wie bereits in \myref{sec:architektur} beschrieben, nutzt \gls{asp} das AutoFac Core Framework intern für \gls{di}. Nach außen hin werden die \lstcode{IServiceCollection} sowie \lstcode{IServiceProvider} Interfaces benutzt. Alle Frameworks, wie \zB das \gls{mvc} Core oder das Identity Core Framework, stellen extension methods für das \lstcode{IServiceCollection} Interface bereit. Mithilfe dieser Methoden können die nötigen Framework-Klassen registriert werden. Möchte man aber mehr als die von diesen beiden Interfaces zur Verfügung gestellten Funktionalitäten benutzen, muss man seinen eigenen \gls{di} Container einbinden. Da Interception ein wichtiger Teil des EventManagers ist, wurde der AutoFac Container eingebunden.
+
+\file{SetupEventSystem.cs}{Beispielhafte Implementierung eines eignen DI Containers}{nc_csharp}
+
+Wie im \myautoref{lst:SetupEventSystem.cs} zu sehen ist, wurde eine eigene extension method geschrieben, welche einen AutoFac \lstcode{ContainerBuilder} erstellt. Zuerst werden die Framework-Klassen auf das \lstcode{IServiceCollection} Interface registriert, dann werden die EventManager Klassen auf den AutoFac \lstcode{ContainerBuilder} registriert. Als nächstes werden die Registrierungen vom \lstcode{IServiceCollection} Interface auf den AutoFac \lstcode{ContainerBuilder} übertragen. Danach werden die Controller Klassen erneut registriert, damit sie ebenfalls abgefangen werden können. Zum Schluss wird der AutoFac \lstcode{Container} gebaut und als \lstcode{AutofacServiceProvider} zurückgegeben, weil das \gls{asp} Framework ein Objekt vom Typ \lstcode{IServiceProvider} benötigt.

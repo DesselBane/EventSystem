@@ -1,0 +1,29 @@
+<div class="bottomSpacer">
+  <h1>Login</h1>
+      <md-progress-bar
+        color="accent"
+        mode="indeterminate"
+        *ngIf="loading">
+      </md-progress-bar>
+  <md-card>
+    <md-card-content>
+      <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate fxLayout="column">
+        <md-input-container [ngClass]="{ 'has-error': f.submitted }">
+          <input mdInput type="text" name="username" placeholder="Email" id="username" [(ngModel)]="username" required>
+          <md-error>Der Benutzername muss angegeben werden!</md-error>
+        </md-input-container>
+        <md-input-container>
+          <input mdInput type="password" placeholder="Passwort" name="password" id="password" [(ngModel)]="password"
+                 required>
+          <md-error>Das Passwort muss angegeben werden!</md-error>
+        </md-input-container>
+        <div fxLayout="column" fxLayoutAlign="space-between center">
+          <button md-raised-button color="primary" [disabled]="loading">Login</button>
+          <br>
+          <a id="resetPasswordLink" routerLink="{{resetPasswordRoute}}">Passwort vergessen? </a>
+        </div>
+        <p *ngIf="error" class="mat-input-error">{{error}}</p>
+      </form>
+    </md-card-content>
+  </md-card>
+</div>

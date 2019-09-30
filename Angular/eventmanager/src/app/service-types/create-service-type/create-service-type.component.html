@@ -1,0 +1,22 @@
+<div class="bottomSpacer">
+  <h3>Servicetypen</h3>
+  <div fxLayout="column">
+    <md-card>
+      <md-card-content>
+        <form id="createServiceType" name="createServiceType" fxLayout="column" fxLayoutGap="10px"
+              fxLayoutAlign="space-between" #f="ngForm" (submit)="f.valid && create()">
+          <md-input-container fxLayout="row" fxLayoutAlign="center center">
+            <input mdInput placeholder="Name für Servicetyp" [(ngModel)]="newServiceType.name" name="serviceTypeName"
+                   required>
+            <md-error>Geben Sie einen Name für Ihren Service-Type an!</md-error>
+          </md-input-container>
+          <div fxLayout="row" fxLayoutAlign="end end">
+            <button type="submit" md-raised-button color="primary">
+              Erstellen
+            </button>
+          </div>
+        </form>
+      </md-card-content>
+    </md-card>
+  </div>
+</div>

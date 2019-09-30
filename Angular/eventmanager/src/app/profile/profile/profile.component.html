@@ -1,0 +1,41 @@
+<div class="bottomSpacer">
+  <h1>Profil</h1>
+  <md-card>
+  <md-card-content fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="20px" fxLayoutAlign="start center">
+    <div id="container">
+      <img [width]="200"
+           [height]="200"
+           class="profileImage clickable"
+           [src]="personImage"
+           (click)="showChangeProfilePictureDialog()">
+    </div>
+    <div fxLayout="column">
+   <md-input-container>
+        <input mdInput type="text" name="firstName" placeholder="Vorname" [(ngModel)]="profile.firstname"
+               [disabled]="!editMode" required>
+        <md-error>Bitte verrate uns deinen Namen ;)</md-error>
+      </md-input-container>
+      <md-input-container>
+        <input mdInput type="text" name="lastName" placeholder="Lastname" [(ngModel)]="profile.lastname"
+               [disabled]="!editMode" required>
+        <md-error>Für deinen vollständigen Namen brauchen wir auch deinen Nachnamen</md-error>
+      </md-input-container>
+    </div>
+  </md-card-content>
+  <md-card-actions fxLayout="row" fxLayoutAlign="end">
+    <button md-button (click)="switchEditMode()" *ngIf="editMode" fxFlexOrder="3">
+      <md-icon>cancel</md-icon>
+      Abbrechen
+    </button>
+    <button md-button (click)="switchEditMode()" *ngIf="!editMode" fxFlexOrder="2">
+      <md-icon>edit</md-icon>
+      Editieren
+    </button>
+    <button md-button (click)="save()" *ngIf="editMode" fxFlexOrder="1">
+      <md-icon>save</md-icon>
+      Speichern
+    </button>
+  </md-card-actions>
+</md-card>
+  <br>
+</div>

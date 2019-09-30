@@ -1,0 +1,11 @@
+% !TEX root=../../report.tex
+
+\Section[swagger]{Swagger}
+Um die Web \gls{api} zu dokumentieren, wurde das Swagger Framework benutzt. Genauer gesagt das NSwag NuGet Packet für \gls{asp}. Dieses Framework ermöglicht es, die Web \gls{api} mit Attributen auszustatten, welche Informationen enthalten wie diese zu benutzen ist. Wie in \myautoref{lst:swaggerAttribut.cs} zu sehen ist, wird vor allem das \lstcode{[SwaggerResponse]} Attribut verwendet. Dieses erwartet einen \gls{http} Status Code und einen Typ. Dieser Typ symbolisiert die Daten, die die Web \gls{api} für den spezifizierten \gls{http} Status Code zurückliefert. Außerdem ist es möglich, eine optionale Beschreibung anzugeben. Im EventManager wurden die einzelnen Fehlerfälle aufgelistet. In jedem Fehlerfall wird ein \lstcode{EcxeptionDTO} Objekt zurückgegeben. Als Beschreibung wurde der EventManager GUID Fehlercode gesetzt.
+
+\file{swaggerAttribut.cs}{Beispiel eines SwaggerResponse Attributs.}{nc_csharp}
+
+Diese Attribute, sowie Informationen, die sich aus der \gls{asp} Controllerstruktur herauslesen lassen, ergeben dann die SwaggerUI. Dies ist eine Webseite, welche alle Informationen zur Web \gls{api} auflistet. Wie in \myautoref{fig:swaggerUi.jpg} zu sehen ist, wird eine URL sowie das zugehörige \gls{http}-Verb angezeigt. Des Weiteren gibt es eine \gls{json} Darstellung der zurückgelieferten Daten mit den zugehörigen \gls{http} Status Codes. Es werden alle Parameter und deren Typ aufgelistet. Der Typ gibt an, ob es sich um einen URL Parameter oder Daten im \gls{http}-Body handelt.
+
+
+\autoImg{swaggerUi.jpg}{Auszug aus der SwaggerUI.}

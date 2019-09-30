@@ -1,0 +1,16 @@
+div.container {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+div.container > button.right {
+  flex: 2 2 calc(10em + 10px); /** 10px is the missing margin of the missing box */
+}
+
+div.container > div.left {
+  flex: 2 2 calc(10em + 10px);
+}
+
+div.container > button.left {
+  flex: 2 2 calc(10em + 10px); /** 10px is the missing margin of the missing box */
+}

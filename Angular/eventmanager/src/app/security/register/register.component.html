@@ -1,0 +1,16 @@
+<div class="bottomSpacer">
+  <h1>Register</h1>
+  <md-card>
+    <form id="register" name="register" fxLayout="column" #f="ngForm" (ngSubmit)="f.valid && register()">
+      <br>
+      <md-input-container>
+        <input mdInput type="email" id="email" placeholder="Email" value="" name="email" [(ngModel)]="email" required>
+        <md-error>Die E-Mail-Adresse muss angegeben werden!</md-error>
+      </md-input-container>
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button md-raised-button color="primary" [disabled]="loading">Register</button>
+      </div>
+      <p *ngIf="f.submitted && errorMessage" class="mat-input-error">{{errorMessage}}</p>
+    </form>
+  </md-card>
+</div>

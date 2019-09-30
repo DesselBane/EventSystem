@@ -1,0 +1,22 @@
+<div class="bottomSpacer">
+  <h3>Angebotene Services</h3>
+  <div class="mat-error md-card-like-padding">
+    {{error}}
+  </div>
+  <div fxLayout="column" fxLayoutGap="10px" class="minWidth300">
+    <md-card>
+      <md-list class="seperatedList" fxLayout="column">
+        <md-list-item *ngFor="let item of eventService">
+            <p>{{item.profile}}</p>
+          <span fxFlex="grow"></span>
+            <button md-button color="warn" (click)="submitDelete(item.id)">Löschen</button>
+        </md-list-item>
+      </md-list>
+
+    </md-card>
+  </div>
+</div>
+
+<button md-fab md-fab-bottom-right id="fab" routerLink="/provideEventService/createEventService">
+  <md-icon aria-label="Example icon-button with a heart icon">add</md-icon>
+</button>

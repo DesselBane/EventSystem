@@ -1,0 +1,140 @@
+% Shortcuts with correct space
+\newcommand{\ua}{\mbox{u.\,a.\ }}
+\newcommand{\idr}{\mbox{i.\,d.\,R. }}
+\newcommand{\ca}{\mbox{ca.\ }}
+\newcommand{\zB}{\mbox{z.\,B.\ }}
+\newcommand{\dahe}{\mbox{d.\,h.\ }}
+\newcommand{\vgl}{Vgl.\ }
+\newcommand{\bzw}{bzw.\ }
+\newcommand{\evtl}{evtl.\ }
+\newcommand{\dw}{des Weiteren}
+\newcommand{\uu}{u.\ U.\ }
+
+% Enumeration
+\newcommand{\enumDot}[1]{
+	\begin{itemize}
+		#1
+	\end{itemize}
+}
+
+\newcommand{\enumNum}[1]{
+	\begin{enumerate}
+		#1
+	\end{enumerate}
+}
+
+% Zoning
+\newcommand{\Chapter}[2][]{
+	\chapter{#2}
+	\ifthenelse{\equal{#1}{}}{}{\label{ch:#1}}
+}
+
+\newcommand{\Section}[2][]{
+	\section{#2}
+	\ifthenelse{\equal{#1}{}}{}{\label{sec:#1}}
+}
+
+\newcommand{\Subsection}[2][]{
+	\subsection{#2}
+	\ifthenelse{\equal{#1}{}}{}{\label{subsec:#1}}
+}
+
+\newcommand{\Subsubsection}[2][]{
+	\subsubsection{#2}
+	\ifthenelse{\equal{#1}{}}{}{\label{subsubsec:#1}}
+}
+
+% Header and Footer
+\renewcommand*{\chapterpagestyle}{scrheadings}
+\renewcommand{\headfont}{\normalfont}
+
+% tableheader with: name, span of 1, center, and bold
+\newcommand{\thead}[1]{ \multicolumn{1}{c}{\bfseries #1} }
+
+% references and inputs
+\newcommand{\file}[3]{
+	\lstinputlisting [caption={#2},label={lst:#1}, language=#3, escapechar=|]{ res/code/#1 }
+}
+
+\newcommand{\fileJS}[3]{
+	\lstinputlisting [caption={#2},label={lst:#1}, language=#3, escapechar=|, style=htmlcssjs]{ res/code/#1 }
+}
+
+\newcommand{\fileSegment}[5]{
+	\lstinputlisting [caption={#2},label={lst:#1}, language=#3,firstline={#4},lastline={#5}]{ res/code/#1 }
+}
+
+\newcommand{\showimg}[2][scale=1.0]{ \includegraphics[{#1}]{res/images/#2} }
+\newcommand{\image}[3][scale=1.0]{
+	\begin{figure}[ht]
+		\centering
+		\showimg[#1]{#2}
+		\caption{#3}
+		\label{fig:#2}
+	\end{figure}
+}
+
+\newcommand{\autoImg}[2]{
+	\begin{figure}[ht]
+		\centering
+		\includegraphics[width=1.0\textwidth]{res/images/#1}
+		\caption{#2}
+		\label{fig:#1}
+	\end{figure}
+}
+
+\newcommand{\tbl}[3]{
+	\begin{table}[h]
+		\begin{center}
+			%\rowcolors{startrow}{color}{color}
+			\begin{tabular}{#2}
+				#3
+			\end{tabular}
+			\caption{#1}
+			\label{table:{#1}}
+		\end{center}
+	\end{table}
+}
+% add glossary entry
+
+\newcommand{\entry}[2]{\newglossaryentry{#1}{name={#1},description={#2}}}
+
+% einfaches Wechseln der Schrift, z.B.: \changefont{cmss}{sbc}{n}
+\newcommand{\changefont}[3]{\fontfamily{#1} \fontseries{#2} \fontshape{#3} \selectfont}
+\newcommand{\bs}{$\backslash$}
+
+% zum Ausgeben von Autoren
+\newcommand{\AutorName}[1]{\textsc{#1}}
+\newcommand{\Autor}[1]{\AutorName{\citeauthor{#1}}}
+
+% verschiedene Befehle um Wörter semantisch auszuzeichnen ----------------------
+\newcommand{\NeuerBegriff}[1]{\textbf{#1}}
+\newcommand{\Fachbegriff}[1]{\textit{#1}}
+\newcommand{\Eingabe}[1]{\texttt{#1}}
+\newcommand{\Code}[1]{\texttt{#1}}
+\newcommand{\Datei}[1]{\texttt{#1}}
+\newcommand{\Datentyp}[1]{\textsf{#1}}
+\newcommand{\XMLElement}[1]{\textsf{#1}}
+\newcommand{\Webservice}[1]{\textsf{#1}}
+
+\newcommand{\addpage}[1]{\include{pages/#1}}
+\newcommand{\addsubpage}[1]{\input{pages/#1}}
+
+%hyperref
+% Befehle, die Umlaute ausgeben, führen zu Fehlern, wenn sie hyperref als
+% Optionen übergeben werden
+\hypersetup{
+	pdftitle={\titel \untertitel},
+	pdfauthor={\autor},
+	pdfcreator={\autor},
+	pdfsubject={\titel \untertitel},
+	pdfkeywords={\titel \untertitel}
+}
+
+\newcommand*{\myautoref}[1]{\hyperref[{#1}]{\autoref{#1} \vpageref{#1}}}
+\newcommand*{\myref}[1]{\hyperref[{#1}]{\autoref{#1} \nameref{#1} \vpageref{#1}}}
+\newcommand*{\mylineref}[2]{\hyperref[{#1}]{\autoref{#1} \vpageref{#1}, Zeile \ref{line:#2}}}
+\newcommand*{\mynameref}[1]{\hyperref[{#1}]{\nameref{#1} \vpageref{#1}}}
+
+\newcommand{\lstcode}[1]{\texttt{#1}}
+\newcommand{\revMark}[1]{\textcolor{red}{#1} \ref{revMarkerLABEL}}

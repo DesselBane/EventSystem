@@ -1,0 +1,46 @@
+<md-toolbar color="primary">
+  <button md-button (click)="sidenav.toggle()" fxHide="false" fxHide.gt-sm>
+    <md-icon>menu</md-icon>
+  </button>
+  <span fxHide fxShow.gt-sm>Eventmanager</span>
+  <span class="fill-remaining-space">
+  </span>
+  <span>
+    <a class="noDecoration" [routerLink]="['/auth/login']" fxLayout="row" fxLayoutAlign="center center">
+      <p>Abmelden &nbsp;</p>
+      <md-icon class="example-icon">power_settings_new</md-icon>
+    </a>
+  </span>
+</md-toolbar>
+<div>
+  <md-sidenav-container>
+    <md-sidenav #sidenav mode="{{navMode}}" opened="true">
+      <md-nav-list>
+        <div *ngFor="let item of navigationItems">
+          <div *ngIf="(item.needsAuthentication && isLoggedIn())
+        || ((item.needsAuthentication == null) && !isLoggedIn())">
+            <md-expansion-panel *ngIf="(item.children != null) && item.hasPrivilege()">
+              <md-expansion-panel-header>
+                <md-panel-title fxLayout="row" fxLayoutAlign="start center">
+                  <p>{{item.label}}</p>
+                </md-panel-title>
+              </md-expansion-panel-header>
+              <md-nav-list *ngFor="let subitem of item.children">
+                <md-list-item routerLink="{{subitem.route}}"
+                              *ngIf="subitem.hasPrivilege == null || subitem.hasPrivilege()">
+                  <p>{{subitem.label}}</p>
+                </md-list-item>
+              </md-nav-list>
+            </md-expansion-panel>
+            <md-list-item *ngIf="item.children == null" routerLink="{{item.route}}">
+              <p>{{item.label}}</p>
+            </md-list-item>
+          </div>
+        </div>
+      </md-nav-list>
+    </md-sidenav>
+    <div fxLayout="column" fxLayoutAlign="space-around center">
+      <router-outlet></router-outlet>
+    </div>
+  </md-sidenav-container>
+</div>

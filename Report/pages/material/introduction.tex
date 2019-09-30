@@ -1,0 +1,23 @@
+% !TEX root=../../report.tex
+
+
+\Section[angularmat]{Angular Material}
+
+Angular Material ist ein zusätzliches Framework für die Gestaltung von Oberflächen und ist für die Verwendung mit Angular konzipiert.
+Es wird von Google entwickelt und basiert auf Googles Material Design.
+Da bereits Kenntnisse zu Angular Material im Team vorhanden sind, fällt die Entscheidung für Angular Material und gegen andere bekannte Frameworks, wie beispielsweise Bootstrap.
+
+Das Framework enthält mehr als 30 Basiskomponenten, wie beispielsweise Checkboxen und Datepicker (siehe \myautoref{lst:material/basic-datepicker.html}), die in das eigene Projekt leicht eingebunden werden können. In den meisten Fällen müssen sie nicht weiter angepasst werden, manchmal waren jedoch Nachbesserungen nötig, da die bereitgestellten Komponenten nicht fehlerfrei verwendbar waren. Auf die entstandenen Probleme wird im \myref{sec:problems} eingegangen.
+
+\file{material/basic-datepicker.html}{HTML-Markup zum Einbinden eines Datepickers}{HTML5}
+
+
+\Subsubsection{Material Design}
+Das Material Design ist eine Gestaltungsrichtlinie von Google, die das Ziel hat, optisch ansprechende und leicht zu verwendende Oberflächen zu gestalten.
+
+Auf der Webseite von Material wird ausführlich beschrieben und visualisiert, welche Richtlinien zur Gestaltung einer Oberfläche beachtet werden müssen \cite{material}. Ein Beispiel hierfür ist \myautoref{fig:materialdesignex1.png}.
+
+\autoImg{materialdesignex1.png}{Gewünschte Darstellung der Dicke von Elementen}
+
+Das Material Design fokussiert die Verwendung von sogenannten \enquote{Kacheln}, die beim EventManager die Basis für alle Oberflächengruppen bilden. Durch dieses Designelement können unabhängige Kontrolloberflächen deutlich getrennt dargestellt werden.
+\newpage

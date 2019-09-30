@@ -1,0 +1,21 @@
+% !TEX root=../../report.tex
+
+\Section[ngInterception]{Interception mit Angular}
+Seit Angular in der Version 4.3 erschienen ist, gibt es eine neue Bibliothek für den
+Umgang mit gls{http}-Requests. Um Stichtagsmigrationen zu vermeiden, wird sowohl das bisherige HttpClientModule, als auch der neue HttpClient unterstützt.
+Die Angularversion des EventManagers musste auf die Version 4.3 angehoben werden, da nur der neue HttpClient die Nutzung von Interceptoren unterstützt.
+
+
+\Subsubsection{Migration von HttpClientModule  zur HttpClient Bibliothek}
+Bei der Umstellung auf die neue Bibliothek müssen alle Stellen im Client angepasst werden, die \gls{http}-Anfragen versenden.
+Hauptsächlich betrifft dies die Services, da diese die einzigen Klassen sind, welche \gls{http}-Anfragen versenden.
+
+Zunächst muss der Import von HttpClientModule zu HttpClient angepasst werden, welches nun aus dem Paket \enquote{@angular/common/http} statt \enquote{@angular/http} stammt.
+Außerdem muss nun die neue HttpClient Klasse, anstelle der bisherigen http Klasse, injiziert werden.
+\cite{httpClient} \cite{httpInter}.
+
+\Subsubsection{Verwendung von Interceptoren im Projekt} \label{authInterceptor}
+Die Interceptoren werden im EventManager zum Setzen des \enquote{Content-Type} Attributes in den Headern der ausgehenden \gls{http}-Requests verwendet.
+Dies geschieht, wie in \myautoref{lst:authenticationinterceptor.ts} zu sehen ist, in einem eigenen \enquote{AuthenticationInterceptor}, welcher außerdem den Authorization-Header setzt. Da diese Funktionalität bei jedem Request benötigt wird, kann sie in einem Interceptor besonders gut gekapselt werden.
+
+\file{authenticationinterceptor.ts}{AuthenticationInterceptor des EventManagers}{JavaScript}

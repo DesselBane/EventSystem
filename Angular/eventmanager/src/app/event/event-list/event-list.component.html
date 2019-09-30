@@ -1,0 +1,27 @@
+<div class="bottomSpacer">
+  <h1>Events</h1>
+    <md-card routerLink="/events/event/{{item.id}}" *ngFor="let item of events">
+      <div class="cardTitleImageWrapper" md-card-image="" fxLayout="column">
+        <h2 class="cardImageTitle">{{item.name}}</h2>
+        <img src="../../../assets/img/city_nuernberg.png" md-card-image>
+      </div>
+      <md-card-content>
+        <md-list>
+          <div fxLayout="column" fxLayoutAlign="space-between center" fxLayout.gt-sm="row">
+            <md-list-item>
+              <p md-line>Startzeit: {{item.start | date:"dd.MM.yyyy HH:mm"}}</p>
+            </md-list-item>
+            <md-list-item>
+              <p md-line>Endzeit: {{item.end | date:"dd.MM.yyyy HH:mm"}}</p>
+            </md-list-item>
+          </div>
+        </md-list>
+      </md-card-content>
+    </md-card>
+  </div>
+
+<div fxLayoutAlign="end end">
+  <button md-fab id="fab" routerLink="/events/createEvent">
+    <md-icon aria-label="Example icon-button with a heart icon">add</md-icon>
+  </button>
+</div>

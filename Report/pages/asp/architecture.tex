@@ -1,0 +1,27 @@
+% !TEX root=../../report.tex
+
+\Section[architektur]{Architektur}
+Ein großes Thema bei der Entwicklung des Backends war, dieses möglichst flexibel und erweiterbar zu halten. Aus diesem Grund gibt es mehrere Modularisierungsansätze.
+
+\Subsubsection{Projektstruktur}
+Die Solution ist, wie in \myautoref{fig:backendSolution.jpg} zu sehen ist, in mehrere Projekte aufgeteilt. Grundlegend wird in vier Arten von Projekten unterschieden. Die erste Kategorie sind Datenbanken. Diese Projekte beinhalten nicht das Datenmodell oder den abstrakten Datenkontext, sondern die spezifischen Klassen für \zB den \gls{mssql} Server. Das liegt daran, dass für jeden Datenbankprovider ein eigener Kontext existieren sollte, um die Migrationen sauber voneinander trennen zu können (siehe \myref{sec:migrations}).
+
+\image[scale=.5]{backendSolution.jpg}{C\# Projektübersicht (Solution)}
+
+Die zweite Kategorie ist im EventManager mit Framework benannt. Hierin befinden sich alle EventManager-spezifischen Klassen, welche aber nichts mit \gls{asp} zu tun haben. Alle \gls{dll}s, die \enquote{Infrastructure} im Namen haben, enthalten ausschließlich Interfaces, \gls{dto} Klassen, sowie Exceptionklassen. Diese werden oft in den anderen Projekten referenziert und stellen die Abstraktionsebene dar. In allen \enquote{Common} \gls{dll}s sind konkrete Implementierungen zu finden. Diese könnten ausgetauscht werden und sind nur im EventSystemWebApi Projekt referenziert, da sich dort das \enquote{Composition Root} befindet (siehe \myref{sec:asp_basics}) \cite{compRoot}.
+
+In der Kategorie Testing gibt es zwei Projekte. Das eine für abstrakte Basisklassen, das andere für die konkreten Testklassen. Diese Testklassen enthalten Akzeptanztests. Ursprünglich gab es noch ein weiteres Projekt, welches für Unittests gedacht war. Nachdem Unittests aufwändiger zu pflegen sind, und keinen ersichtlichen Mehrwert gegenüber den Akzeptanztests gebracht haben, wurde dieses Projekt gelöscht.
+
+Die letzte Kategorie ist für \gls{asp} Projekte gedacht. Hier befindet sich das EventSystemWebApi Projekt, welches alle \gls{asp}-spezifischen Klassen wie \zB die Controller enthält und welches das \enquote{Hauptprojekt} darstellt. Das zweite Projekt in dieser Kategorie ist das AdminConsole Projekt. Dies ist ein kleines Hilfsprojekt, um eine Datenbank mit Testdaten aufzusetzen. Dieses Projekt wurde vor allem vom Frontendteam genutzt, um nach einer Änderung \bzw Erweiterung des Backends wieder eine funktionierende Datenbank zu bekommen.
+
+\Subsubsection{Serviceschicht und Validierung}
+Ein weiterer Modularisierungsansatz ist eine Serviceschicht. Für jeden Aspekt des EventManager Systems gibt es einen Service, welcher die Funktionalitäten dieses Aspektes kapselt. Ein Beispiel hierfür ist der \lstcode{IPersonService}. Dieser beinhaltet eine Methode, um das \lstcode{Person} Objekt des aktuell eingeloggten Nutzers zu finden (siehe \myautoref{lst:IPersonService.cs}). Die Hauptaufgabe der Services ist die Kommunikation mit der Datenbank. Services werden via Constructor-Injection \enquote{angefordert} und sowohl von anderen Services, als auch von den Controllern genutzt. Alle Services nutzen das C\# Async und Await Pattern um asynchron zu arbeiten \cite{asyncAwait} \cite{tpl}.
+
+\file{IPersonService.cs}{Das IPersonService Interface}{nc_csharp}
+
+Validierung ist ein wichtiger Punkt. Das Backend muss zum einen überprüfen, ob die Daten strukturell sowie semantisch korrekt sind. Zum anderen muss gesichert sein, dass der Nutzer die Aktion, die er gerade durchzuführen versucht, auch durchführen darf. Die einfachste Möglichkeit wäre es, diese Überprüfungen in den Service selbst einzubauen. Das aber widerspricht dem \enquote{Single Responibility Pattern}, welches besagt, dass eine Klasse sowie eine Methode nur eine einzige Funktionalität haben sollte. Der Service hat bereits die Funktionalität, die Daten in die Datenbank zu schreiben, und sollte deshalb nicht zusätzlich die Validierung übernehmen.
+
+\file{EventInterceptor.UpdateHost.cs}{Die UpdateHostAsync Methode des EventServiceInterceptors.}{nc_csharp}
+
+
+Im EventManager wird zur Validierung das Konzept der Interception genutzt (siehe \myref{sec:interception_general}). Jedem Service ist ein Interceptor zugeordnet, welcher vor jedem Methodenaufruf ausgeführt wird. Zusätzlich zum Interceptor gibt es jedoch noch eine Validator Klasse. In dieser Klasse sind die konkreten Prüfungen der Daten und des Kontextes enthalten. Dieser Extraschritt ist notwendig, da \zB der EventServiceInterceptor wie in \myautoref{lst:EventInterceptor.UpdateHost.cs} sowohl Event-spezifische Kontrollen als auch Personen-spezifische Kontrollen durchführen muss. Es wurde anfangs versucht, dies über eine Vererbungshierarchie abzubilden, was jedoch sehr schnell sehr unübersichtlich wurde und nicht zu empfehlen ist.

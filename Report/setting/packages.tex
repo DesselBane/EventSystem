@@ -1,0 +1,84 @@
+% !TEX root=../report.tex
+% language packages
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[dvips,final]{graphicx} % graphics package (jpg possible)
+%\usepackage[table]{
+%	xcolor     % color package (red, green, blue, yellow, cyan, magenta, black, white)
+%}
+
+
+\usepackage[
+style=alphabetic,
+bibencoding=latin1,
+hyperref=true,
+alldates=long,
+block=par
+]{biblatex}
+\usepackage{
+	csquotes,		% quotes
+	textcomp,   % Euro-Zeichen etc.
+	lmodern,    %
+	relsize,    % font package
+	amsmath,    % AMSTeX math symbols package (e. g. \boldsymbol \mathbb)
+	amsfonts,   %
+	setspace,   % linespace package
+	geometry,   %
+	floatflt,   % image floating package
+	url,        % URL package
+	imakeidx,   % index package (mark word with \index{category!word})
+	chngcntr,   % numbering footnotes package
+	paralist,   % list format package
+	ifthen,     % ifthen package
+	xspace,     % remove whitespace in macros
+	%longtable,  %
+	array,      %
+	ragged2e,   %
+	%lscape,     % long tables
+	listings,    % listings package
+	titlesec,
+	varioref,
+	soul,
+	alltt,
+	xcolor,
+	enumitem
+}
+
+
+\usepackage[
+automark,     % Kapitelangaben in Kopfzeile automatisch erstellen
+headsepline,  % Trennlinie unter Kopfzeile
+ilines        % Trennlinie linksbündig ausrichten
+]{scrpage2}
+
+% ------------------------------------------------------------------------------
+% PDF-Optionen
+% ------------------------------------------------------------------------------
+\usepackage[
+bookmarks,
+bookmarksopen=true,
+colorlinks=true,
+% diese Farbdefinitionen zeichnen Links im PDF farblich aus
+linkcolor=blue, % einfache interne Verknüpfungen
+anchorcolor=black,% Ankertext
+citecolor=blue, % Verweise auf Literaturverzeichniseinträge im Text
+filecolor=magenta, % Verknüpfungen, die lokale Dateien öffnen
+menucolor=red, % Acrobat-Menüpunkte
+urlcolor=cyan,
+% diese Farbdefinitionen sollten für den Druck verwendet werden (alles schwarz)
+%linkcolor=black, % einfache interne Verknüpfungen
+%anchorcolor=black, % Ankertext
+%citecolor=black, % Verweise auf Literaturverzeichniseinträge im Text
+%filecolor=black, % Verknüpfungen, die lokale Dateien öffnen
+%menucolor=black, % Acrobat-Menüpunkte
+%urlcolor=black,
+%backref, % backref from library to pages
+plainpages=false, % zur korrekten Erstellung der Bookmarks
+pdfpagelabels, % zur korrekten Erstellung der Bookmarks
+hypertexnames=false, % zur korrekten Erstellung der Bookmarks
+linktocpage % Seitenzahlen anstatt Text im Inhaltsverzeichnis verlinken
+]{hyperref}
+
+% use package after hyperref
+\usepackage[nonumberlist,nopostdot]{glossaries}

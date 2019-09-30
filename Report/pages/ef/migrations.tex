@@ -1,0 +1,14 @@
+% !TEX root=../../report.tex
+
+
+\Section[migrations]{Migrationen}
+
+Um von den C\# Klassen zu einer Datenbank zu kommen, gibt es die sogenannten \enquote{Migrationen}. Eine Migration ist eine Klasse, welche von der abstrakten Basisklasse \lstcode{Migration} erbt und die zwei Methoden \lstcode{Up()} und \lstcode{Down()} implementieren muss. In diesen Methoden wird spezifiziert, was bei einem Up- \bzw Downgrade passieren soll. Wie in \myautoref{lst:migration.cs} zu sehen ist, kann man einige vorgefertigte Methoden wie \lstcode{CreateTable()} oder \lstcode{DropTable()} benutzen. Ferner ist es möglich, mit der \lstcode{Sql()} Methode ein beliebiges \gls{sql} Statement auszuführen. Dies ist besonders wichtig, wenn man bestehende Daten migrieren möchte, und diese vor oder nach einer Strukturänderung aufbereiten muss \cite{efMigrations}.
+
+\file{migration.cs}{Beispiel einer Migrationsklasse}{Nc_csharp}
+
+Um eine Migration zu erstellen, sowie auf der Datenbank ein Update durchzuführen, führt man Programme in der Konsole aus. Beim Erstellen einer Migration scannt das \gls{ef} Programm alle Klassen, welche in einer bestimmten \lstcode{DbContext} Klasse referenziert sind. Danach erkennt das Programm anhand der \lstcode{DbContextModelSnapshot} Klasse alle Änderungen, die Auswirkungen auf das Datenbankschema haben. Anhand dieser Informationen wird eine neue Migrationsklasse generiert, deren \lstcode{Up()} und \lstcode{Down()} Methoden die erkannten Änderungen widerspiegeln \cite{efMigrations}.
+
+Dieser Code wird beim Erstellen einer Migration einmalig generiert. Eine Änderung des generierten Codes sollte wohl überlegt sein, denn \gls{ef} analysiert zur Laufzeit den aktuellen Datenkontext. Sollte dieser nicht zur tatsächlichen Datenbank passen, wird eine Exception geworfen. Anstelle des Codes sollten das Datenmodell, die Attribute oder die Konfiguration via Fluent API angepasst werden.
+
+Möchte man nun die Datenbank auf den aktuellen Stand bringen, genügt es, das \lstcode{update-database} Programm auszuführen. Dieses bewirkt, dass alle noch fehlenden Migrationen angewendet werden \cite{efMigrations}. Dieses und viele weitere Programme sind im \enquote{Microsoft.EntityFrameworkCore.Tools.DotNet} NuGet Paket enthalten.

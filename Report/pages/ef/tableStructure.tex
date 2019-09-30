@@ -1,0 +1,13 @@
+% !TEX root=../../report.tex
+
+\Section{Tabellen Struktur}
+Möchte man ein \gls{orm} Framework benutzen, sollten man sich Gedanken darüber machen, wie die C\# Klassenstruktur auf eine relationale Datenbank abgebildet werden soll. Bei \gls{ef} gibt es drei gängige Verfahren.
+
+\Subsubsection{TPH Table per Hierarchy}
+Hierbei wird das \gls{sql} Schema denormalisiert und es werden sogenannte \enquote{discriminator} Spalten eingefügt, welche die Typinformationen speichern \cite{efTPH}. Es wird eine Tabelle pro Basisklasse angelegt und alle Properties aller erbenden Klassen befinden sich in der Tabelle als jeweils eigene Spalte. Dieses Verfahren wurde eingesetzt, um Typen mit nur einer erbenden Klasse zu modellieren. Sollte das Projekt erweitert werden, wird dieses Verfahren vermutlich nicht länger genutzt werden.
+
+\Subsubsection{TPT Table per Type}
+Alle \enquote{ist ein} Beziehungen werden, mithilfe eines Fremdschlüssels, als \enquote{hat ein} Beziehungen modelliert \cite{efTPT}. Mit diesem Verfahren wird für jeden Typ, sei er nun abstrakt oder nicht, eine eigene Tabelle angelegt. Die Tabellen der konkreteren Klassen referenzieren die Tabellen der Basisklassen mit einem Fremdschlüssel. Jede Tabelle enthält allerdings nur die Properties \bzw Spalten, welche die zugehörige Klasse selbst deklariert. Da dieses Verfahren sehr viele Tabellen erzeugt, wurde es nicht eingesetzt.
+
+\Subsubsection{TPC Table per Concrete Class}
+Bei diesem Verfahren wird jegliche Polymorphie sowie Vererbung aus dem \gls{sql} Datenschema entfernt \cite{efTPC}. Alle nicht abstrakten Klassen erhalten ihre eigene Tabelle in der Datenbank. Die Properties, welche von der Basisklasse deklariert werden, sind in beiden Tabellen jeweils als Spalte zu finden. Für komplexere Datenstrukturen ist dieses Verfahren zu empfehlen, da ein Datenbankadministrator die Datenbank immer noch gut verstehen kann, und gleichzeitig der Entwickler mit einer von ihm gewählten Vererbungshierarchie arbeiten kann.

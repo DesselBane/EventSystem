@@ -1,0 +1,46 @@
+<div class="bottomSpacer">
+  <h1>Dienstleister</h1>
+  <p *ngIf="error" class="error">{{error}}</p>
+  <div fxLayout="column" fxLayoutGap="10px">
+    <md-card *ngFor="let item of serviceSlotsWithType">
+      <md-card-header routerLink="/events/event/{{eventId}}/sps/{{item.id}}">
+        <div class="cardTitleImageWrapper" md-card-image="" fxLayout="column">
+          <h2 class="cardImageTitle">{{item.type}}</h2>
+        </div>
+      </md-card-header>
+      <md-card-content fxLayout="column" routerLink="/events/event/{{eventId}}/sps/{{item.id}}">
+        <md-list>
+          <div fxLayout="column" fxLayoutAlign="space-between">
+            <md-list-item>
+              <p md-line>Startzeit: {{item.start | date:"dd.MM.yyyy HH:mm"}}</p>
+            </md-list-item>
+            <md-list-item>
+              <p md-line>Endzeit: {{item.end | date:"dd.MM.yyyy HH:mm"}}</p>
+            </md-list-item>
+            <md-list-item>
+              <p md-line>Budget: {{item.budgetTarget}}</p>
+              <image mdSuffix>€</image>
+            </md-list-item>
+            <md-list-item *ngIf="item.state !== undefined">
+              <p md-line>Status: {{translateState(item.state)}}</p>
+            </md-list-item>
+          </div>
+        </md-list>
+      </md-card-content>
+      <md-card-actions>
+        <div fxLayout="row" fxLayoutAlign="space-between center" class="container">
+          <button *ngIf="item.state==1" md-button color="success" (click)="accept(item)" class="left">Akzeptieren
+          </button>
+          <div *ngIf="item.state!=1" class="left"></div>
+          <button *ngIf="item.state<3" md-button color="warn" (click)="decline(item)" class="right">Ablehnen</button>
+        </div>
+      </md-card-actions>
+    </md-card>
+  </div>
+</div>
+
+<div fxLayoutAlign="end end">
+  <button md-fab md-fab-bottom-right id="fab" routerLink="/events/event/{{eventId}}/createServiceSlot">
+    <md-icon aria-label="Example icon-button with a heart icon">add</md-icon>
+  </button>
+</div>

@@ -1,0 +1,21 @@
+% !TEX root=../../report.tex
+
+\Section[aspInterception]{Interception mit AutoFac}
+
+Die Technik der Interception wird im EventManager Backend zur Validierung genutzt. Es wird sowohl die Instance Interception als auch die Type Interception eingesetzt. Da alle Services ein Interface implementieren, ist es hier am sinnvollsten die Instance Interception anzuwenden, welche von AutoFac als \enquote{Interface Interception} bezeichnet wird (\myautoref{lst:AddPeople.cs}).
+
+\file{AddPeople.cs}{Registrierung der Person Komponente mit Interception}{nc_csharp}
+
+Hierzu wird der betreffende \lstcode{PersonService} als \lstcode{IPersonService} registriert. Dann erfolgt ein Aufruf der Methode \lstcode{EnableInterfaceInterceptors} gefolgt von der Spezifikation des Interceptortyps, in diesem Fall \lstcode{PersonService\-Interceptor}. Dieser muss danach ebenfalls registriert werden. Als letztes wird die \lstcode{PersonValidator} Klasse registriert, da diese vom Interceptor benötigt wird.
+
+\newpage
+
+\file{InterceptingMappingBase.cs}{Basisklasse aller Interceptoren}{nc_csharp}
+
+Jeder Service Interceptor erbt von der abstrakten Basisklasse \lstcode{Intercepting\-MappingBase} (\myautoref{lst:InterceptingMappingBase.cs}). Diese Klasse implementiert das nötige \lstcode{IInterceptor} Interface, sowie die \lstcode{Intercept(IInvocation)} Methode. Mit dieser simplen Basisklasse können sogenannte \enquote{Mappings} registriert werden. Ein Mapping ist ein Tupel aus einem \lstcode{String} und einer \lstcode{Action<IInvo\-ca\-tion>}. Diese Tupel werden im \lstcode{\_mappings} Dictionary gespeichert. Wird nun eine Methode aufgerufen, deren Name als Schlüssel im \lstcode{\_map\-pings} Dictionary vorkommt, wird die zugehörige \lstcode{Action<IInvocation>} ausgeführt. Ein Beispiel, wie diese Klasse sowie deren \lstcode{BuildUp} Methode zu nutzen sind, ist in \myautoref{lst:PersonServiceCtor.cs} zu sehen.
+
+\file{PersonServiceCtor.cs}{Beispielnutzung der \lstcode{BuildUp} Methode}{nc_csharp}
+
+Die Type Interception wird genutzt, um die \gls{asp} Controller-Klassen abzufangen. Es ist hier nicht möglich, die Klassen durch Interfaces zu ersetzen, weshalb die Type Interception erforderlich ist. Wie bereits in \mynameref{nullParam} beschrieben, ist bei einem Methodenaufruf für einen Methodenparameter der Wert \lstcode{NULL} gesetzt, wenn dieser mit dem \lstcode{[FromBody]} Attribut ausgezeichnet ist, aber nicht aus dem \gls{http}-Body geparst werden kann. Dies wird vom System immer als ungültiger URL Aufruf gewertet, und mit einem 422 \gls{http} Status Code sowie der Fehlermeldung \enquote{Argument cannot be null} beantwortet. Um dieses Verhalten konsistent abzubilden, gibt es die \lstcode{ControllerInterceptor} Klasse (\myautoref{lst:ControllerInterceptor.cs}). Diese Klasse prüft, ob es sich bei dem aktuellen Methodenaufruf um eine Methode handelt, welche mit einem vom \lstcode{[HttpMethodAttribute]} erbenden Attribut ausgezeichnet ist. Ist dies der Fall, wird geprüft, ob einer der Parameter \lstcode{NULL} ist. Trifft auch das zu, wird eine Exception geworfen.
+
+\file{ControllerInterceptor.cs}{Die \lstcode{Intercept} Methode der \lstcode{ControllerInterceptor} Klasse}{nc_csharp}

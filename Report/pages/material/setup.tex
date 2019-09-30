@@ -1,0 +1,19 @@
+% !TEX root=../../report.tex
+
+\Subsubsection[setup]{Setup}
+
+Angular Material wird über den \gls{npm} installiert (\myautoref{lst:material/installAngularMaterial.ts}).
+
+\file{material/installAngularMaterial.ts}{Befehl zum Installieren von Angular Material mittels NPM}{HTML5}
+
+Damit die Komponenten von Angular Material verwendet werden können, muss das \lstcode{BrowserAnimationsModule} im main.module.ts importiert werden. Des Weiteren müssen Module für die verwendeten Komponenten importiert werden, wie beispielsweise \lstcode{MatCheckboxModule} für das Verwenden der Angular Material Checkbox.
+
+Im Verlauf des Projektes wurde festgestellt, dass einige Materialkomponenten von allen Modulen des EventManagers genutzt werden. Um nicht immer dieselben \lstcode{import} Statements schreiben zu müssen, wurde ein separates Modul erstellt, welches die einzelnen Material Module kapselt (\myautoref{lst:material/material-meta-module.ts}).
+
+Der Vorteil dieser Methode ist, dass nur noch ein Modul eingebunden werden muss. Der Nachteil hingegen ist, dass viele Module Materialkomponenten importieren, die sie gar nicht benötigen. Die nicht benötigten Komponenten werden während des Build-Prozesses entfernt.
+
+
+\file{material/material-meta-module.ts}{Material-meta.module wie es im EventManager verwendet wird}{JavaScript}
+
+Des Weiteren kann ein \enquote{Theme} erstellt werden, um ein eigenes Farbschema zu definieren. Der EventManager verwendet jedoch die Standardeinstellungen.
+Aus diesem Grund wird auf die Erstellung eines eigenen \enquote{Themes} nicht weiter eingegangen.

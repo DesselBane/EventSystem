@@ -1,0 +1,36 @@
+<div class="bottomSpacer">
+  <h3>Benutzerdetails <span *ngIf="IsLoading">Loading...</span></h3>
+
+  <app-person-attribute-listing *ngIf="!IsLoading" [user]="_User"></app-person-attribute-listing>
+
+  <div *ngIf="ErrorMessages.length > 0" class="mat-error md-card-like-padding">
+    <p *ngFor="let error of ErrorMessages">{{error}}</p>
+  </div>
+
+  <md-card>
+    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutAlign="space-between center">
+      <label>Diesem Nutzer Rechte vergeben:</label>
+      <md-select placeholder="Berechtigung wählen" fxLayoutAlign="center center">
+        <md-option *ngFor="let item of allPermissionsList"
+                   (click)="addPermission(item?.key)">
+          {{ item?.value }}
+        </md-option>
+      </md-select>
+    </div>
+<br>
+    <br>
+    <h4>Aktuelle Berechtigungen</h4>
+    <ul *ngIf="User?.permissions != null">
+      <span *ngFor="let item of User.permissions">
+        <li *ngIf="!item.isInternal" fxLayoutAlign="space-between center">
+          <p>{{item.displayName}}</p>
+          <button md-button color="warn" (click)="deletePermission(item)">Löschen</button>
+        </li>
+      </span>
+    </ul>
+  </md-card>
+
+
+
+</div>
+

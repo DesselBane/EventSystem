@@ -1,0 +1,51 @@
+% !TEX root=../../report.tex
+
+
+\Section[problems]{Probleme}
+
+Angular Material hat im ersten Quartal 2017 einen Wechsel des im Code verwendeten Präfixes vollzogen.
+Die Änderungen betreffen das Präfix der \gls{css}-Klassen von md (Material Design) auf mat (MATerial design).
+Da die \gls{css}-Klassen der Komponenten beim Build-Prozess automatisch gesetzt werden, war bei dieser Änderung kein manueller Umstellungsaufwand nötig.
+Lediglich manuell gesetzte Klassen hätten umgestellt werden müssen, diese werden beim EventManager jedoch nicht benutzt.
+
+Der Umstellungsprozess der Komponenten und Modul-Bezeichnungen wurde im Projekt noch nicht durchgeführt und es wird eine veraltete Version von Angular Material verwendet. Dies ist unproblematisch, da die neueren Angular Material Versionen keine Funktionalitäten bereitstellen, die im EventManager benötigt werden. Eine Migration wurde derzeit nicht für ausreichend wichtig erachtet.
+
+\Subsubsection{Fehlende Elemente - Seitennavigation}
+Trotz der zahlreich verfügbaren Komponenten kam es vor, dass eine Komponente benötigt wurde,
+die standardmäßig nicht vorhanden ist. Im EventManager war dies eine Seitennavigation mit einklappbaren Untermenüpunkten.
+
+In der Angular Material Dokumentation \cite{angularMaterial} wird eine solche Seitennavigation eingesetzt. Es gibt dafür allerdings keine vorgefertigte Komponente und auch keine Anleitung, wie eine solche Komponente selbst erstellt werden kann.
+
+\image[scale=.6]{navigationSnippet.png}{Die Seitennavigation im EventManager}
+
+Für den EventManager wurden verschiedene verfügbare Komponenten kombiniert, damit die Navigation dennoch wie geplant dargestellt werden kann (\myautoref{fig:navigationSnippet.png}).
+Hierfür wurden folgende Komponenten verwendet:
+
+\begin{itemize}
+  \item MatSidenav
+  \item MatList
+  \item MatExpansionPanel
+\end{itemize}
+
+\Subsubsection{MatSidenav}
+Die MatSidenav (\myautoref{fig:matsidenav.png}) besteht aus zwei logischen Teilen, dem Bereich des Seiteninhalts und dem Bereich der Seitennavigation, welcher alle weiteren Komponenten der Navigation beinhaltet.
+
+Ein Vorteil dieser Komponente ist, dass standardmäßig ein responsives Verhalten vorhanden ist und somit die Navigation bei kleinen Bildschirmen ausgeblendet wird.
+Über einen Button kann diese bei Bedarf wieder eingeblendet werden. Das Verhalten orientiert sich an bekannten Verfahren bei Anwendungen für Geräte mit kleinen Bildschirmen.
+
+\image[scale=.6]{matsidenav.png}{Darstellung der MatSidenav \cite{angularMaterial}}
+
+\Subsubsection{MatList}
+
+\image[scale=.6]{matlist.PNG}{Darstellung der MatList \cite{angularMaterial}}
+
+Die MatList bietet eine schlichte Liste, die für die Seitennavigation im EventManager als Basis aller Navigationspunkte dient.
+Diese Komponente wurde einer einfachen \gls{html}-Liste (\lstcode{<li>}) vorgezogen, da die Komponente bereits optisch dem Materialdesign entspricht.
+
+\newpage
+
+\Subsubsection{MatExpansionPanel}
+Besitzt ein Menüpunkt Kindelemente, dürfen diese erst sichtbar werden, nachdem auf den Elternpunkt geklickt wurde.
+Realisiert wird dieses Verhalten mittels des MatExpansionPanel (\myautoref{fig:matexpansionpanel.png}), welches eine schlichte Animation in Form eines Ausklappens des untergeordneten Bereiches bietet.
+
+\image[scale=.6]{matexpansionpanel.png}{Darstellung des MatExpansionPanel \cite{angularMaterial}}

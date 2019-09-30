@@ -1,0 +1,6 @@
+<div class="bottomSpacer">
+  <h3>Benutzer <span *ngIf="IsLoading">Loading...</span></h3>
+  <div fxLayout="column" fxLayoutGap="50px">
+    <app-person-attribute-listing *ngFor="let item of Users" [user]="item" routerLink="/userManagement/details/{{item.id}}"> </app-person-attribute-listing>
+  </div>
+</div>

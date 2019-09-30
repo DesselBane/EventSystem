@@ -1,0 +1,28 @@
+% !TEX root=../../report.tex
+
+\Section{Layout}
+
+Die Layoutmöglichkeiten in Angular Material haben in der neuen Version für Angular (oft auch Angular2 genannt) leider abgenommen.
+Die Vorgängerversion für AngularJS bot ein umfangreiches Layout \gls{api} an, mit dem es möglich war, die Anordnung der Bedienelemente je nach
+Displaygröße festzulegen. Grundlegend hierbei ist die Einteilung der Bildschirmgrößen in festgelegte Sektionen von xsmall (unter 480 Pixel Breite) bis xlarge (ab 1920 Pixel Breite).
+
+Einige wichtige Aspekte beim Umsetzen eines Oberflächenlayouts in \gls{html} und \gls{css} werden in \myautoref{fig:fxlayoutgroessen.png} beschrieben.
+
+\autoImg{fxlayoutgroessen.png}{Übersicht über die Einteilung der Bildschirmgrößen}
+
+\Subsubsection{Verwendung von FxLayout}
+\image[scale=.5]{mediaquerie.png}{Beispiele verschiedener MediaQueries \cite{mediaQueries}}
+
+FxLayout ist eine Layout \gls{api} für Angular, die sich stark an der Funktions- und Verwendungsweise der ursprünglichen Gestaltungsmöglichkeiten von AngularJS orientiert.
+Für die Oberflächengestaltung werden \gls{html}-Tags von FxLayout verwendet. Diese werden beim Build-Prozess über die AngularCLI in Flexbox \gls{css}-Attribute und \gls{css}-MediaQueries übersetzt.
+
+\Subsubsection{Zeilen und Spaltenorientierung}
+
+Bei Layouts wird generell zwischen zeilen- und spaltenorientierten Layouts unterschieden. Oft wird eine beliebig verschachtelte Kombination aus beiden Orientierungen verwendet. Wie in \myautoref{fig:profilansicht.png} zu sehen ist, verwendet die Profilkachel eine Spaltenorientierung, wohingegen ihre Kindelemente zeilenartig angeordnet sind.
+
+\autoImg{profilansicht.png}{Das Layout der Profilansicht}
+
+\Subsubsection{Inhaltsausrichtung}
+Die Ausrichtung des Inhaltes kann mit FxLayout-Attributen umgesetzt werden, deren Namensgebung sich stark an denen der \gls{css}-Eigenschaften des \enquote{justify-content} orientiert.
+Zu beachten ist, dass sich der verfügbare Platz nach der Größe des Elternelements richtet. Es ist also sorgfältig darauf zu achten, wie Elemente verschachtelt sind und welche
+Attribute jeweils gesetzt sind, da diese an Kindelemente vererbt werden.

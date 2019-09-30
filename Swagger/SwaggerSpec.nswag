@@ -1,0 +1,29 @@
+﻿{
+  "swaggerGenerator": {
+    "webApiToSwagger": {
+      "assemblyPaths": [
+        "../EventSystemWebApi/bin/Release/PublishOutput/EventSystemWebApi.dll"
+      ],
+      "assemblyConfig": "../EventSystemWebApi/bin/Release/PublishOutput/web.config",
+      "referencePaths": [
+        "../EventSystemWebApi/bin/Release/PublishOutput/",
+        "../../../../Users/darkp/.nuget/packages/System.Security.Claims/4.3.0/lib/netstandard1.3/"
+      ],
+      "isAspNetCore": true,
+      "controllerNames": [
+        "EventSystemWebApi.Controllers.AuthController"
+      ],
+      "defaultUrlTemplate": "api/{controller}/{id?}",
+      "defaultPropertyNameHandling": "Default",
+      "defaultEnumHandling": "Integer",
+      "flattenInheritanceHierarchy": false,
+      "generateKnownTypes": true,
+      "generateXmlObjects": false,
+      "addMissingPathParameters": false,
+      "infoTitle": "Web API Swagger specification",
+      "infoVersion": "1.0.0",
+      "output": null
+    }
+  },
+  "codeGenerators": {}
+}

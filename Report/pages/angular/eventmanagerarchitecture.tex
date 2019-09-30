@@ -1,0 +1,16 @@
+% !TEX root=../../report.tex
+
+
+\section{Architektur des Frontends}
+
+Die Architektur des EventManagers wird anhand der Vorgaben von Angular, beschrieben in \myref{sec:angulararchitecture}, entwickelt und an die \enquote{best practices} angelehnt.
+
+Das app.module und die app.component stellen den Einstiegspunkt der Anwendung dar. Im app.module werden alle am EventManager beteiligten Komponenten importiert und somit verwendbar gemacht. Im app.component ist die Basis der Benutzeroberfläche definiert. Im Falle des EventManagers ist es die Navigationsleiste.
+
+Jede fachliche Funktionalität wird in einer eigenständigen Komponente gekapselt, wie zum Beispiel das Anlegen oder Bearbeiten eines Events. Jede dieser Komponenten bringt eine Oberfläche mit, die speziell für den jeweiligen Anwendungsfall entwickelt wird. Das bedeutet also, dass die Komponente für das Anlegen eines Events eine Eingabemaske aufbaut, über die die erforderlichen und optionalen Eigenschaften eines Events gefüllt werden können. Weiterhin bringt sie eine Schaltfläche mit, welche auf eine Funktion zum Anlegen eines Events in der Programmlogik verweist.
+
+Zur besseren Übersicht werden Komponenten mit dem gleichen Fachbereich in einem feature.module zusammengefasst. Es gibt also zum Beispiel feature.mod\-ules für das Event, für die Authentifizierung, oder auch für das Profil. Diese wiederum deklarieren die zugehörigen Komponenten.
+
+Die \gls{http} Requests an das Backend werden in Services ausgelagert. Die Services orientieren sich an der Fachlichkeit, die sie bedienen, damit zusammengehörige Requests in einem Service stehen. Die Methoden zum Absetzen der Requests geben Observables zurück, um die zeitliche Synchronisation zwischen dem Absetzen einer Anfrage an das Backend bis zur Antwort zu erleichtern. Die angeforderten Daten werden über das Property Binding in die Oberfläche nachgeladen sobald sie verfügbar sind. Im Fehlerfall ist die Antwort des Backends ein \gls{http} Fehlercode, welcher dann von einer gesonderten Klasse bearbeitet wird. Der Fehlercode wird ausgelesen und in einen Fehlertext übersetzt, der dem Anwender an der Oberfläche präsentiert wird.
+
+Das app.module bietet außerdem den Einstiegspunkt für das gesamte Routing der Webseite. Zur besseren Wartbarkeit wird ein app.routing.module geschaffen, in dem die Routen zu den einzelnen feature.modules definiert werden. Damit zu den Komponenten der feature.modules navigiert werden kann, werden die benötigten Routen in einem routing.module für das feature.module zusammengefasst. Diese Routen zeigen direkt auf die Komponenten. Jede Route wird mit einem sogenannten Guard versehen. Der Guard kann anhand der Claims nachvollziehen, ob die angeforderte Route begangen werden darf. Ist dies nicht der Fall wird dem Anwender eine Fehlermeldung ausgegeben.

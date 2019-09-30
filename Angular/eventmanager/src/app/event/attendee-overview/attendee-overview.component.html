@@ -1,0 +1,22 @@
+<form (submit)="addPerson()">
+  <md-form-field fxFlexFill>
+    <input mdInput placeholder="Nach Personen suchen" [formControl]="searchControl" [mdAutocomplete]="auto" required>
+    <md-error>Bitte geben Sie einen Namen an!</md-error>
+    <button mdSuffix md-button>Hinzufügen</button>
+    <md-autocomplete #auto="mdAutocomplete" [displayWith]="displayFunction">
+      <md-option *ngFor="let option of filteredOptions | async" [value]="option">
+        {{option.firstname}} {{option.lastname}}
+      </md-option>
+    </md-autocomplete>
+  </md-form-field>
+</form>
+
+<md-selection-list #selectedAttendees>
+  <md-list-option *ngFor="let person of attendeePersons" id="{{person.id}}">
+    {{person.firstname}}, {{person.lastname}}
+  </md-list-option>
+</md-selection-list>
+<button md-raised-button (click)="deleteSelectedAttendees(selectedAttendees.selectedOptions.selected)"
+        *ngIf="attendeePersons.length !== 0">
+  Entfernen
+</button>

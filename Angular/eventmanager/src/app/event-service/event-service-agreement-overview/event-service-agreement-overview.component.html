@@ -1,0 +1,33 @@
+<div class="bottomSpacer">
+  <h3>Serviceanfragen</h3>
+  <div class="mat-error md-card-like-padding">
+    {{error}}
+  </div>
+  <div fxLayout="column" fxLayoutGap="10px" class="minWidth400">
+    <md-card *ngFor="let item of eventServiceAgreement" [class]="getStyle(item.state)">
+          <span fxLayout="row" fxLayoutGap="5px">
+            <div fxLayout="column">
+              <p>Status: </p>
+              <p>Event: </p>
+              <p>Angebot: </p>
+              <p>Start: </p>
+              <p>Ende: </p>
+            </div>
+            <div fxLayout="column">
+              <p>{{getStyle(item.state) | titlecase}}</p>
+              <p>{{item.eventId}}</p>
+              <p>{{item.cost | currency:'EUR':true:'1.2-2'}}</p>
+              <p>{{item.start |  date:'yyyy-MM-dd HH:mm a'}}</p>
+              <p>{{item.end | date:'yyyy-MM-dd HH:mm a'}}</p>
+            </div>
+          </span>
+      <p>Kommentar:
+        <br>
+        {{item.comment}}</p>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <button *ngIf="item.state==0" md-button color="success" (click)="proposal(item)">Akzeptieren</button>
+        <button *ngIf="item.state<3" md-button color="warn" (click)="decline(item)">Ablehnen</button>
+      </div>
+    </md-card>
+  </div>
+</div>

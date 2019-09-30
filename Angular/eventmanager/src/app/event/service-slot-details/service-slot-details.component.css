@@ -1,0 +1,12 @@
+.redButton {
+  color: white;
+  background-color: red;
+}
+
+.hackyBottomSpacer {
+  margin-bottom: 50px;
+}
+
+.spacingBetweenButtons {
+  margin-bottom: 10px;
+}

@@ -1,0 +1,37 @@
+<div class="bottomSpacer">
+  <h1>Neuer Dienstleistungsslot</h1>
+  <p *ngIf="error" class="error">{{error}}</p>
+  <md-card>
+    <form (ngSubmit)="addServiceSlot()">
+      <div fxLayout="column">
+        <md-form-field fxFill>
+          <input mdInput placeholder="Nach Dienstleistungstyp suchen" [formControl]="serviceTypeFormControl"
+                 [mdAutocomplete]="auto"
+                 required>
+          <md-error>Bitte geben Sie einen Typ an!</md-error>
+          <md-autocomplete #auto="mdAutocomplete" [displayWith]="displayFunction">
+            <md-option *ngFor="let option of filteredOptions" [value]="option">
+              {{option.name}}
+            </md-option>
+          </md-autocomplete>
+        </md-form-field>
+        <md-input-container fxFill>
+          <input mdInput placeholder="Startzeit" [formControl]="startTimeFormControl"
+                 [mdDatepicker]="startTimeDatePicker">
+          <md-datepicker-toggle mdSuffix [for]="startTimeDatePicker" type="button"></md-datepicker-toggle>
+        </md-input-container>
+        <md-datepicker #startTimeDatePicker></md-datepicker>
+        <md-input-container fxFill>
+          <input mdInput placeholder="Endzeit" [formControl]="endTimeFormControl" [mdDatepicker]="endTimeDatePicker">
+          <md-datepicker-toggle mdSuffix [for]="endTimeDatePicker" type="button"></md-datepicker-toggle>
+        </md-input-container>
+        <md-datepicker #endTimeDatePicker></md-datepicker>
+        <md-input-container fxFill>
+          <input mdInput placeholder="Budget" [formControl]="targetBudgetFormControl">
+          <label mdSuffix>€</label>
+        </md-input-container>
+      </div>
+      <button md-raised-button>Speichern</button>
+    </form>
+  </md-card>
+</div>

@@ -1,0 +1,30 @@
+<div class="bottomSpacer">
+  <h1>Dienstleistungsslot Details</h1>
+  <p *ngIf="error" class="error">{{error}}</p>
+  <md-card class="hackyBottomSpacer">
+    <form (ngSubmit)="addServiceAgreement()">
+      <label *ngIf="!currentEventService">Dienstleister:</label>
+      <label *ngIf="currentEventService">Dienstleister: {{currentEventService.profile}}</label>
+      <md-select placeholder="Dienstleister wählen" [(formControl)]="eventServiceModelsSelectControl"
+                 *ngIf="!currentEventService">
+        <md-option *ngFor="let item of eventServiceModels" [value]="item">
+          {{item.profile}}
+        </md-option>
+      </md-select>
+      <button type="submit" md-button *ngIf="!currentEventService" mdSuffix>
+        Hinzufügen
+      </button>
+    </form>
+  </md-card>
+  <div fxLayout="column" *ngIf="isLoaded">
+    <button md-raised-button class="redButton spacingBetweenButtons" *ngIf="currentAgreement.state === 3"
+            (click)="deleteServiceAgreement()">
+      Dienstleister löschen
+    </button>
+    <button md-raised-button class="redButton"
+            *ngIf="currentAgreement.state === undefined"
+            (click)="deleteServiceSlot()">
+      Dienstleistungsslot löschen
+    </button>
+  </div>
+</div>

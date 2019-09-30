@@ -1,0 +1,21 @@
+% !TEX root=../../report.tex
+
+
+\Section{Konfiguration}
+Im \enquote{Code-First-Approach} gibt es drei Möglichkeiten, die Datenbank zu konfigurieren.
+
+Die einfachste Methode ist, die Standardkonfiguration zu akzeptieren, welche \gls{ef} anwendet. Hierbei kann man sehr wenig steuern, denn man muss sich an die Konventionen von \gls{ef} halten. Anpassungen sind nur bedingt möglich \cite{conventions}. Diese Methode ist vor allem geeignet für kleine Datenbanken oder Testdummies.
+
+\file{serviceSlotEF.cs}{Beispielkonfiguration via Data Annotations}{nc_csharp}
+
+Die zweite Methode sind \enquote{Data Annotations} \cite{dataAnnotations}. In diesem Fall vergibt man C\# Attribute um \zB eine Property als Primärschlüssel auszuzeichnen. Mit dieser Methode lässt sich alles, was eine Klasse \bzw eine Tabelle betrifft, sehr gut konfigurieren.
+
+Möchte man aber auch das komplette Datenbankschema anpassen, benötigt man die sogenannte \enquote{Fluent-API} \cite{fluentAPI}. Diese Variante verwendet Methoden und C\# Objekte, um eine Konfiguration zu erstellen.
+
+\file{serviceSlotFluent.cs}{Beispielkonfiguration via Fluent-API}{nc_csharp}
+
+Um eine Property als Primärschlüssel zu markieren, kann man \zB das \lstcode{[Key]} Attribut setzen (\mylineref{lst:serviceSlotEF.cs}{pkAn}) oder die \lstcode{HasKey()} Methode verwenden (\mylineref{lst:serviceSlotFluent.cs}{pkFluent}).
+
+Das Angenehme an \gls{ef} ist, dass man diese Methoden miteinander mischen kann und sich nicht auf eine festlegen muss. Sollte man allerdings einen Widerspruch erzeugen, wie \zB per Annotation eine Property als Primärschlüssel auszuzeichnen, während man per Fluent-API die gleiche Property als Nullable markiert, würde das in einer Exception enden.
+
+In diesem Projekt wurde vor allem die Methode der Fluent-API genutzt, da die Konfiguration einheitlich sein und in einer Datei stattfinden sollte. Primärschlüssel wurden nur im Falle eines zusammengesetzten Primärschlüssels explizit konfiguriert.

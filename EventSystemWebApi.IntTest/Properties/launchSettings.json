@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "EventSystemWebApi.IntTest": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "integrationTest"
+      }
+    }
+  }
+}

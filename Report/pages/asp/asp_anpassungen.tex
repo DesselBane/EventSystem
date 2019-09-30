@@ -1,0 +1,18 @@
+% !TEX root=../../report.tex
+
+\Section[asp_anpassungen]{ASP Anpassungen}
+Es wurden zwei eigene Middlewares für den EventManager entwickelt. Die erste Middleware ermöglicht ein globales Exception Handling. Die zweite Middleware wird benötigt, um gewisse Anforderungen einer \gls{spa} zu realisieren.
+
+\Subsubsection{Exception Middleware}
+
+Die Idee hinter der Exception Middleware ist, dass an einem beliebigen Punkt in der \gls{owin}-Pipeline eine Exception geworfen werden kann, welche dann von dieser Middleware in eine sinnvolle HTTP-Response übersetzt wird. Hierfür wird, wie in \myautoref{lst:exceptionMiddleware.cs} zu sehen ist, ein Try-Catch-Block um den Rest der Pipeline gesetzt.
+
+Es werden nur Exceptions abgefangen, welche von der \lstcode{Invalid\-RestOpera\-tion\-Exception} Basisklasse erben. Dies ist die Basisklasse für weitere Exceptions wie \zB \lstcode{For\-bidden\-Exception}, \lstcode{NotFoundException} oder auch \lstcode{Unpro\-cess\-able\-Entity\-Ex\-cep\-tion}. Die \lstcode{Invalid\-RestOperationException} Klasse definiert zwei schreibgeschützte Properties. Zum einen \lstcode{public abstract int ResponseCode} und zum anderen \lstcode{public Guid CustomErrorCode}. Die \lstcode{Re\-sponse\-Code} Property enthält den HTTP Status Code, also \zB im Falle eines nicht gefundenen Datensatzes den Code 404. In der \lstcode{CustomErrorCode} Property werden die internen Fehler-GUIDs des EventManagers gespeichert. Diese ermöglichen es, im Frontend die korrekten Fehlermeldungen anzuzeigen, und werden im \gls{http}-Body an den Client zurückgeschickt (\mylineref{lst:exceptionMiddleware.cs}{em_exceptionDTO}).
+
+\file{exceptionMiddleware.cs}{Exceptionmanagement via Middleware}{nc_csharp}
+
+
+\Subsubsection{\gls{spa} Middleware}
+Bei traditionellen Webseiten wird das Routing vom Webserver übernommen. Dieser liefert verschiedene \gls{html} Dateien für verschiedene URLs. Bei einer \gls{spa} hingegen wird das Routing durch den Javascript Code im Frontend realisiert. Das bedeutet für den Webserver, dass dieser für jede Route das gleiche \gls{html} zurückliefern sollte. Nachdem die Webseite eine \gls{spa} ist, gibt es auch nur eine \gls{html}-Datei. Es genügt allerdings nicht, auf jede Anfrage diese \gls{html}-Datei zurückzuliefern, da der Webserver zusätzlich die Daten-API, den Swagger (siehe \myref{sec:swagger}) sowie statische Dateien ausliefern muss. Deshalb muss der Webserver, wie im \mylineref{lst:spaMiddleware.cs}{spa_conditions}, zu sehen ist, den Request auf diese \enquote{besonderen} Pfade und Bedingungen prüfen.
+
+\file{spaMiddleware.cs}{Implementierung einer SPA Komponente.}{nc_csharp}

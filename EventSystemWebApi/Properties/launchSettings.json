@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "EventSystemWebApi": {
+      "commandName": "Project",
+      "launchUrl": "api/values",
+      "applicationUrl": "http://localhost:50001"
+    }
+  }
+}

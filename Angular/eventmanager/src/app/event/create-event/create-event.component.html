@@ -1,0 +1,12 @@
+<div class="bottomSpacer">
+  <h1>Neues Event</h1>
+  <md-card>
+    <md-card-header>
+    </md-card-header>
+    <app-event-attribute-listing [event]="event" [mode]="mode"
+                                 (cancelOutput)="cancle()"
+                                 (eventOutput)="createEvent($event)">
+    </app-event-attribute-listing>
+    <p *ngIf="errorMessage" class="mat-input-error">{{errorMessage}}</p>
+  </md-card>
+</div>

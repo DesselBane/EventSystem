@@ -1,0 +1,147 @@
+% !TEX root=../report.tex
+% general listings
+\lstset{
+	basicstyle=\ttfamily\footnotesize,
+	columns=fullflexible,
+	showstringspaces=false,
+	numbers=left,                   % where to put the line-numbers
+	numberstyle=\tiny\color{gray},  % the style that is used for the line-numbers
+	numbersep=5pt,                  % how far the line-numbers are from the code
+	backgroundcolor=\color{white},      % choose the background color. You must add \usepackage{color}
+	showspaces=false,               % show spaces adding particular underscores
+	commentstyle=\color{dkgreen},
+	showstringspaces=false,         % underline spaces within strings
+	showtabs=false,                 % show tabs within strings adding particular underscores
+	frame=single,                   % adds a frame around the code
+	rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
+	tabsize=2,                      % sets default tabsize to 2 spaces
+	captionpos=b,                   % sets the caption-position to bottom
+	breaklines=true,                % sets automatic line breaking
+	breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+	title=\lstname,                   % show the filename of files included with \lstinputlisting;
+	aboveskip=2em,
+	% also try caption instead of title
+	commentstyle=\color{vs_comment}\upshape
+}
+
+% XML settings
+\lstdefinelanguage{NC_xml}
+{
+	basicstyle=\ttfamily,
+	morestring=[s]{"}{"},
+	morecomment=[s]{?}{?},
+	morecomment=[s]{!--}{--},
+	commentstyle=\color{xml_comment},
+	moredelim=[s][\color{xml_value}]{>}{<},
+	moredelim=[s][\color{xml_attribute}]{\ }{=},
+	stringstyle=\color{xml_at_value},
+	identifierstyle=\color{xml_tag}
+}
+
+
+% Java settings
+\lstdefinelanguage{NC_java}
+{
+	language=Java,
+	morekeywords={ String },
+	basicstyle=\ttfamily \color{black} \small \smaller,
+	emphstyle={\color{ec_class}},
+	emph={getRandomFloat},
+	showspaces=false,
+	showtabs=false,
+	breaklines=true,
+	showstringspaces=false,
+	breakatwhitespace=true,
+	commentstyle=\color{ec_comment},
+	keywordstyle=\color{ec_keyword},
+	stringstyle=\color{ec_string},
+}
+
+% C# settings
+\lstdefinelanguage{NC_csharp}
+{
+	language=[Sharp]C,
+	morekeywords={ var, async, await, partial }, % keywords
+	basicstyle=\ttfamily \color{black} \small \smaller,
+	emphstyle={\color{vs_class}},
+	emph={ IApplicationBuilder, IHostingEnvironment,ILoggerFactory, CookieAuthenticationOptions,IAuthenticationManager, BasicAuthenticationManager, HttpStatusCode,File,Path,IOptions,SpaOptions,Task,ChannelFactory,IDataService, Console, ServiceEndpoint, UnityServiceHost, NotificationService, IAuthorizationPolicy, ToolAuthorizationPolicy, ReadOnlyCollection, ToolUsernamePasswordValidator, UserNamePasswordValidationMode, OperationContract, EntityDataIdentifier, Lock, INotificationCallback, ServiceContract, SessionMode, INotificationInbound, NotificationCallbackContext, InstanceContext, HdsClaimsIdentityDTO, Pkg_Network, Pkg_Network_Header, PacketAssembler, PacketStructure, Rsa_Worker, BitConverter, BinaryFormatter, MemoryStream, List, Buffer, NullReferenceException, EventHandler, IpEndPointEventArgs, ErrorEventArgs, NetPacketInEventArgs, IPEndPoint, ConnectionState, INetCon, IDisposable, DateTime, ILock, Employee, UserClaim, Index, StringLength, Required, Application, Settings, ResourceDictionary, Uri, UriKind, ResourceManager, IValueConverter, IModuleCatalog, DirectoryModuleCatalog, SplashScreenModule, NetworkModule, Directory, ModuleNames, RelayCommand, Func, Action, ArgumentNullException, Cmd_Base, InterfaceDataTemplateSelector, DataTemplateSelector, DataTemplate, DependencyObject, IDataTemplateSelectable, FrameworkElement, DataTemplateKey, Type, INotifyPropertyChanged, INotifyDataErrorInfo, IBaseViewModel, NotMapped, LockStates, EntityBase, IValidatableObject, MaintenenceAmount, DbMigration}, % classnames
+	showspaces=false,
+	showtabs=false,
+	breaklines=true,
+	showstringspaces=false,
+	breakatwhitespace=true,
+	commentstyle=\color{vs_comment},
+	keywordstyle=\color{vs_keyword},
+	stringstyle=\color{vs_string},
+}
+
+% JavaScript
+\lstdefinelanguage{JavaScript}{
+	morekeywords={ import, class, export, @NgModule, from }, % keywords
+	basicstyle=\ttfamily \color{black} \small \smaller,
+	emphstyle={\color{vs_class}},
+	emph={ AssignmentSearchComponent, AssignmentEditComponent, PipeModule, ModalModule, TooltipModule, ModelViewModul, TimepickerModule, FormsModule, CommonModule, assignmentRouting, AssignmentComponent, AssignmentOverviewComponent, AssignmentService, AssignmentModule, NgModule }, % classnames
+	showspaces=false,
+	showtabs=false,
+	breaklines=true,
+	showstringspaces=false,
+	breakatwhitespace=true,
+	morestring=[b]',
+	morestring=[b]",
+	commentstyle=\color{vs_comment},
+	keywordstyle=\color{vs_keyword},
+	stringstyle=\color{vs_string},
+}
+
+% CSS
+\lstdefinelanguage{CSS}{
+	keywords={color,background-image:,margin,padding,font,weight,display,position,top,left,right,bottom,list,style,border,size,white,space,min,width, transition:, transform:, transition-property, transition-duration, transition-timing-function},
+	sensitive=true,
+	morecomment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	morestring=[b]',
+	morestring=[b]",
+	alsoletter={:},
+	alsodigit={-}
+}
+
+
+
+\lstdefinelanguage{HTML5}{
+	language=html,
+	sensitive=true,
+	alsoletter={<>=-},
+	morecomment=[s]{<!-}{-->},
+	tag=[s],
+	otherkeywords={
+		% General
+		>,
+		% Standard tags
+		<!DOCTYPE,
+		</html, <html, <head, <title, </title, <style, </style, <link, </head, <meta, />,
+		% body
+		</body, <body,
+		% Divs
+		</div, <div, </div>,
+		% Paragraphs
+		</p, <p, </p>,
+		% scripts
+		</script, <script,
+		% More tags...
+		<canvas, /canvas>, <svg, <rect, <animateTransform, </rect>, </svg>, <video, <source, <iframe, </iframe>, </video>, <image, </image>, <header, </header, <article, </article
+	},
+	ndkeywords={
+		% General
+		=,
+		% HTML attributes
+		charset=, src=, id=, width=, height=, style=, type=, rel=, href=,
+		% SVG attributes
+		fill=, attributeName=, begin=, dur=, from=, to=, poster=, controls=, x=, y=, repeatCount=, xlink:href=,
+		% properties
+		margin:, padding:, background-image:, border:, top:, left:, position:, width:, height:, margin-top:, margin-bottom:, font-size:, line-height:,
+		% CSS3 properties
+		transform:, -moz-transform:, -webkit-transform:,
+		animation:, -webkit-animation:,
+		transition:,  transition-duration:, transition-property:, transition-timing-function:,
+	}
+}
